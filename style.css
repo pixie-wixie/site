@@ -859,3 +859,8 @@ p { text-wrap: pretty; }
 .breadcrumbs a { color: #e2b2f4; }
 .breadcrumbs a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .about-page > .breadcrumbs { padding: 0 0 20px; }
+
+.privacy-checklist { padding-left: 24px; color: #d4c3de; font-size: 18px; line-height: 1.85; }
+.privacy-checklist li { padding-left: 5px; margin: 12px 0; }
+.privacy-checklist li::marker { color: #d49cf5; }
+@media(max-width:650px) { .privacy-checklist { font-size: 17px; } }
