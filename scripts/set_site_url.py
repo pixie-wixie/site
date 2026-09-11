@@ -16,6 +16,8 @@ ns='http://www.sitemaps.org/schemas/sitemap/0.9';register_namespace('',ns)
 sitemap=Element('{'+ns+'}urlset')
 pages = list(root.glob('*.html')) + list((root/'articles').rglob('*.html'))
 for p in sorted(pages):
+ # Google's ownership files must remain unmodified and outside the sitemap.
+ if re.fullmatch(r'google[0-9a-f]+\.html',p.name) and p.read_text().strip()=='google-site-verification: '+p.name:continue
  relative=p.relative_to(root).as_posix()
  canonical=base+'/' if relative=='index.html' else base+'/'+relative
  s=p.read_text()

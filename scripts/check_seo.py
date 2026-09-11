@@ -21,6 +21,8 @@ class Page(HTMLParser):
      elif u.fragment:self.anchors.append(u.fragment)
 titles=set();descs=set();urls=set()
 for p in list(root.glob('*.html'))+list((root/'articles').rglob('*.html')):
+ # Google's ownership files must remain unmodified and outside the sitemap.
+ if re.fullmatch(r'google[0-9a-f]+\.html',p.name) and p.read_text().strip()=='google-site-verification: '+p.name:continue
  s=p.read_text();page=Page(p);page.feed(s)
  assert page.h1==1,p
  assert len(page.ids)==len(set(page.ids)),p
