@@ -16,7 +16,7 @@
 
 ## Редагування
 
-Редагуйте тексти безпосередньо в HTML. Усі HTML-файли статей зберігайте в `articles/`. Щоб додати статтю, скопіюйте файл у цій папці, оновіть текст, унікальні метадані й JSON-LD, а потім за потреби додайте посилання `articles/назва.html` на сторінку `materials.html`. Із файлів статей використовуйте `../style.css`, `../img/` та `../materials.html`. Після додавання статті запустіть `python3 scripts/set_site_url.py https://pixiewixie.com`, щоб оновити SEO-адреси та sitemap. Оформлення спільне у `style.css`.
+Редагуйте тексти безпосередньо в HTML. Усі HTML-файли статей зберігайте в `articles/`. Щоб додати статтю, скопіюйте файл у цій папці, оновіть текст, унікальні метадані й JSON-LD, а потім за потреби додайте посилання `articles/назва.html` на сторінку `materials.html`. Із файлів статей використовуйте `../style.css`, `../img/` та `../materials.html`. Після додавання статті запустіть `python3 scripts/set_site_url.py https://pixie-wixie.github.io/site`, щоб оновити SEO-адреси та sitemap. Оформлення спільне у `style.css`.
 
 ## SEO
 
@@ -35,15 +35,35 @@ python3 scripts/set_site_url.py https://ВАШ-ДОМЕН
 
 ## Список статей і сторінки каталогу
 
-Каталог показує статті вертикально, по 10 на сторінку. Після додавання HTML-статті в `articles/` задайте порядковий номер у `<article data-article-order="2">`, додайте її JSON-LD типу `BlogPosting` і обкладинку `<img class="article-cover" ...>`.
+Каталог показує статті вертикально, по 10 на сторінку. Після додавання HTML-статті в `articles/` задайте порядковий номер у `<article data-article-order="2">`, додайте її JSON-LD типу `BlogPosting`.
 
 Оновлення каталогу й SEO-файлів перед публікацією:
 
 ```sh
 python3 scripts/build_materials.py
-python3 scripts/set_site_url.py https://pixiewixie.com
+python3 scripts/set_site_url.py https://pixie-wixie.github.io/site
 ```
 
 Генератор створює `materials.html`, а за потреби `materials-2.html`, `materials-3.html` тощо. Кожна сторінка має власну canonical-адресу. Перехід між сторінками працює звичайними HTML-посиланнями без бекенда. Зміни карток робіть у файлах статей, оскільки каталог генерується з них.
 
 Для кожної статті зазначайте фактичну дату публікації у JSON-LD: `"datePublished": "2026-09-10"`, у видимому елементі `<time datetime="2026-09-10">10 вересня 2026</time>` та метатезі `article:published_time`. Генератор каталогу бере дату з `datePublished` і показує її українською поруч із часом читання. Дата публікації не змінюється під час повторної генерації каталогу.
+
+## Поточна адреса публікації
+
+https://pixie-wixie.github.io/site/
+
+Файл `.nojekyll` дозволяє публікувати готові статичні файли без обробки Jekyll. Додайте https://pixie-wixie.github.io/site/ як ресурс типу URL-prefix у Google Search Console та надішліть https://pixie-wixie.github.io/site/sitemap.xml. Файл robots.txt усередині /site/ не керує скануванням домену: пошуковики шукають його за адресою https://pixie-wixie.github.io/robots.txt. Для власного robots.txt у корені потрібен окремий репозиторій pixie-wixie.github.io або власний домен.
+
+## Перевірка SEO перед публікацією
+
+```sh
+python3 scripts/build_materials.py
+python3 scripts/set_site_url.py https://pixie-wixie.github.io/site/
+python3 scripts/check_seo.py
+```
+
+Перевірка охоплює унікальність title/description, соціальні метадані, H1, мову, локальні посилання, якорі, атрибути зображень, JSON-LD, canonical і sitemap. SEO-генератор підтримує введення адреси з `/index.html`, нормалізуючи її до `/site/`; додає навігаційний шлях, ItemList каталогу та адресу редакції статті. Дата публікації зберігається. Локальна перевірка не вимірює Core Web Vitals і не підтверджує фактичну індексацію Google.
+
+## Очищення файлів
+
+Сайт працює без `main.js`: пошук і фільтри видалено. У `img/` залишені лише зображення, які використовують сторінки або CSS. `.nojekyll` потрібен для GitHub Pages; `scripts/` — для каталогу, SEO-адрес і перевірок. Папку `.git/` потрібно зберігати для історії та синхронізації з GitHub.

@@ -854,3 +854,8 @@ p { text-wrap: pretty; }
   .catalog-list .card-link { grid-template-columns: minmax(0, 1fr); padding: 24px; gap: 18px; }
   .catalog-number { width: 56px; min-height: 56px; font-size: 24px; border-radius: 14px; }
 }
+
+.breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; padding: 23px 0 0; color: #bca4cb; font-size: 13px; line-height: 1.7; }
+.breadcrumbs a { color: #e2b2f4; }
+.breadcrumbs a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.about-page > .breadcrumbs { padding: 0 0 20px; }
